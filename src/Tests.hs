@@ -17,9 +17,13 @@ unitTests = [
     --   ~: cityPairs ("matt", ["london", "paris", "nyc"])
     --   ~?= [("london", "paris"),("london","nyc"),("paris","nyc")],
     --
-    -- "allCityPairs - for multiple users, single pair"
-    --   ~: allCityPairs [("matt", ["london", "paris"]),("dave",["london","paris"])]
-    --   ~?= [("london", "paris"),("london","paris")]
+	"parseRawInput"
+    ~: parseRawInput "matt,london\nmatt,paris\ndave,london"
+    ~?= [("matt", "london"),("matt", "paris"),("dave","london")],
+
+    "parseRawPairs - for multiple users"
+      ~: parseRawPairs [("matt", "paris"),("dave","london"),("matt", "london")]
+      ~?= [("matt", ["london","paris"]),("dave",["london"])]
   ]
 
 acceptanceTests = [
@@ -35,3 +39,4 @@ acceptanceTests = [
       ~: affinities [("matt", ["london","paris","nyc"]),("sue", ["london", "nyc"]),("dave", ["london","nyc"])]
       ~?= [(("london","nyc"),3),(("london","paris"),1),(("paris","nyc"),1)]
   ]
+
